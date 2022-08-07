@@ -6,8 +6,6 @@ app.get("/", (req, res) => {
 });
 
 app.get("/flip-coins", (req, res) => {
-  const randomNumber = Math.random();
-  let coinValue = "";
   const times = Number(req.query.times);
 
   if (times && times > 0) {
@@ -27,15 +25,10 @@ app.get("/flip-coins", (req, res) => {
       tails: tails,
     });
   } else {
-    if (randomNumber < 0.5) {
-      coinValue = "Heads";
-    } else {
-      coinValue = "Tails";
-    }
-    res.send(coinValue);
+    res.send("Please specify number of times");
   }
 });
 
-app.listen(8080, () => {
+app.listen(6000, () => {
   console.log("I am listening on 8080");
 });
