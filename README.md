@@ -29,4 +29,22 @@ Fololowing is the architecture of the application.
 - Wait for 5 seconds and then goto the following URL: `http://localhost:3000/?orgId=1`. Here you should be able to see the grafana dashboard.
 
 ## Grafana Dashboard
+[![Dashboard](https://raw.githubusercontent.com/faizvasaya/prometheus-grapfana-integration/main/Dashboard.png)](https://raw.githubusercontent.com/faizvasaya/prometheus-grapfana-integration/main/Dashboard.png)
 
+- The above dashboard shows the following metrics:
+    - Tails per flip
+    - Heads per flip
+    - Flips per minute
+    - Uptime of the API
+
+## Author
+
+Faizal Vasaya
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/faizalvasaya/) [![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/FaizalVasaya)
+
+## License
+
+MIT
+
+**Free Software, Hell Yeah!**
