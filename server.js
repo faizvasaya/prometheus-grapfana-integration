@@ -1,8 +1,21 @@
 const express = require("express");
 const app = express();
 const client = require("prom-client");
+const responseTime = require("response-time");
 
 let register = new client.Registry();
+
+const restResponseTime = new client.Histogram({
+  name: "rest_response_time_duration_seconds",
+  help: "REST API response time in seconds",
+  labelNames: ["method", "route", "status_code"],
+});
+
+const flipCoinTime = new client.Histogram({
+  name: "flip_coin_response_time_duration_seconds",
+  help: "Time take to flip coins per API request",
+  labelNames: ["operation"],
+});
 
 const headsCount = new client.Counter({
   name: "heads_count",
@@ -22,6 +35,8 @@ const flipCount = new client.Counter({
 register.registerMetric(headsCount);
 register.registerMetric(tailsCount);
 register.registerMetric(flipCount);
+register.registerMetric(restResponseTime);
+register.registerMetric(flipCoinTime);
 
 register.setDefaultLabels({
   app: "coin-api",
@@ -30,6 +45,21 @@ register.setDefaultLabels({
 client.collectDefaultMetrics({
   register,
 });
+
+app.use(
+  responseTime((req, res, time) => {
+    if (req?.route?.path) {
+      restResponseTime.observe(
+        {
+          method: req.method,
+          route: req.route.path,
+          status_code: res.statusCode,
+        },
+        time * 1000
+      );
+    }
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("Hello! I worked.");
@@ -49,6 +79,10 @@ app.get("/flip-coins", (req, res) => {
     console.log(times);
     let heads = 0;
     let tails = 0;
+    const metricsLabels = {
+      operation: "flip-coin",
+    };
+    const timer = flipCoinTime.startTimer();
     for (let index = 0; index < times; index++) {
       const randomNumber = Math.random();
       if (randomNumber < 0.5) {
@@ -57,6 +91,7 @@ app.get("/flip-coins", (req, res) => {
         tails++;
       }
     }
+    timer({...metricsLabels});
     headsCount.inc(heads);
     tailsCount.inc(tails);
     res.json({
