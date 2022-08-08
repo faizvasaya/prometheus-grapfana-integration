@@ -3,7 +3,6 @@
   "description": "This repository demonstrate how to integrate prometheus and grafana in a NodeJS HTTP API for monitoring APIs for reliability and uptime.",
   "version": "1.0.0",
   "main": "server.js",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/faizvasaya/prometheus-grapfana-integration.git"
@@ -16,7 +15,8 @@
   },
   "dependencies": {
     "express": "^4.18.1",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "prom-client": "^14.0.1"
   },
   "bugs": {
     "url": "https://github.com/faizvasaya/prometheus-grapfana-integration/issues"
