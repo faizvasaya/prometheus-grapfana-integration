@@ -10,5 +10,23 @@ reliability and uptime.
 
 
 ## Architecture
-CAdvisor => Prometheus => Grafana Dashboard
+Fololowing is the architecture of the application.
+[![Architecure Diagram](https://raw.githubusercontent.com/faizvasaya/prometheus-grapfana-integration/main/architecture.jpg)](https://raw.githubusercontent.com/faizvasaya/prometheus-grapfana-integration/main/architecture.jpg)
+
+- cAdvisor (Container Advisor) provides container users an understanding of the resource usage and performance characteristics of their running containers. It is a running daemon that collects, aggregates, processes, and exports information about running containers. 
+- Prometheus collects container monitoring metrics from cadvisor and custom metrics form NodeJS Http /metrics endpoint every 5 seconds and stores it.
+- The Grafana visualization service then pulls the data from prometheus for the purpose of metrics visualization.
+
+## Environment setup
+
+- Install Docker
+- Clone the repository
+- Run `npm install`
+- Run `npm run start`
+- Go to following URL from your browser to confirm that the APIs are running: `http://localhost:3001/flip-coins?times=100`
+- Run `docker-compose up --build`
+- Hit the following URL 5-10 times: `http://localhost:3001/flip-coins?times=100` 
+- Wait for 5 seconds and then goto the following URL: `http://localhost:3000/?orgId=1`. Here you should be able to see the grafana dashboard.
+
+## Grafana Dashboard
 
